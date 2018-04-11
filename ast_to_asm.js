@@ -85,4 +85,4 @@ for(i=0; i<words.length; i++) {
   while(word.length < 4) word = "0" + word;
   asm += " DW 0x" + word + "\n";
 }
-fs.writeFileSync(asmName + '.asm', asm);
+fs.writeFileSync(asmName + '.as', asm);

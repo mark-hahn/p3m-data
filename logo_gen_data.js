@@ -54,5 +54,5 @@ getPixels("logo.gif", function(err, pixels) {
     word = (word << 7) + run;
     asm += " DW 0x" + word.toString(16) + "\n";
   }
-  fs.writeFileSync('logotable.asm', asm);
+  fs.writeFileSync('logotable.as', asm);
 });
