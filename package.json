@@ -1,0 +1,18 @@
+{
+  "name": "p3m_data",
+  "version": "1.0.0",
+  "description": "logo gen for pem pic",
+  "main": "logo_gen_data.js",
+  "dependencies": {
+    "bmp-js": "0.0.3",
+    "get-pixels": "^3.3.0",
+    "pixel-bmp": "0.0.1",
+    "tiff": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mark hahn",
+  "license": "ISC"
+}
