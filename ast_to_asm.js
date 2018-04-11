@@ -17,9 +17,11 @@ for(lineIdx = 0; lineIdx < astLines.length; lineIdx += (hgt+1)) {
   col = [];
   for(i=1; i<wid; i++) col[i] = 0;
 
-  for(i=1; i<hgt; i++) {
+  for(i=0; i<hgt; i++) {
     line = astLines[lineIdx+i];
-    console.log(line);
+
+    if(lineIdx == 56) console.log(line);
+
     for(j=0; j<wid; j++) {
       col[j] <<= 1;
       if(line[j] == '*') col[j] |= 1;
@@ -65,7 +67,7 @@ switch(wid*100+hgt) {
 
   case 813:
     asmName = 'font813';
-    for(col=0; col<cols.length; col++) {
+    for(col=0; col<cols.length-8; col++) {
       words.push(cols[col]);
     }
     break;
