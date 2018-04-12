@@ -19,9 +19,6 @@ for(lineIdx = 0; lineIdx < astLines.length; lineIdx += (hgt+1)) {
 
   for(i=0; i<hgt; i++) {
     line = astLines[lineIdx+i];
-
-    if(lineIdx == 56) console.log(line);
-
     for(j=0; j<wid; j++) {
       col[j] <<= 1;
       if(line[j] == '*') col[j] |= 1;
@@ -35,28 +32,39 @@ for(lineIdx = 0; lineIdx < astLines.length; lineIdx += (hgt+1)) {
   if(empty) break;
 }
 
+function reverseCol(idx) {
+  var col = cols[idx];
+  var newCol = 0
+  for(var i=0; i<8; i++) {
+    newCol <<= 1;
+    newCol |= (col & 1);
+    col >>= 1;
+  }
+  return newCol;
+}
+
 words = [];
 switch(wid*100+hgt) {
   case 708:
     asmName = 'font708';
-    for(col=0; col<cols.length; col+=7) {
+    for(var col=0; col<cols.length; col+=7) {
       words.push((
-        (cols[col+0] <<  6) |  // 8 bits
-        (cols[col+1] >>  2)    // 6 bits
+        (reverseCol(col+0) <<  6) |  // 8 bits
+        (reverseCol(col+1) >>  2)    // 6 bits
       ) & 0x3fff);
       words.push((
-        (cols[col+1] << 12) |  // 2 bits
-        (cols[col+2] <<  4) |  // 8 bits
-        (cols[col+3] >>  4)    // 4 bits
+        (reverseCol(col+1) << 12) |  // 2 bits
+        (reverseCol(col+2) <<  4) |  // 8 bits
+        (reverseCol(col+3) >>  4)    // 4 bits
       ) & 0x3fff);
       words.push((
-        (cols[col+3] << 10) |   // 4 bits
-        (cols[col+4] <<  2) |   // 8 bits
-        (cols[col+5] >>  4)     // 2 bits
+        (reverseCol(col+3) << 10) |   // 4 bits
+        (reverseCol(col+4) <<  2) |   // 8 bits
+        (reverseCol(col+5) >>  4)     // 2 bits
       ) & 0x3fff);
       words.push((
-        (cols[col+5] <<  8) |   // 6 bits
-        (cols[col+6] >>  0)     // 8 bits
+        (reverseCol(col+5) <<  8) |   // 6 bits
+        (reverseCol(col+6) >>  0)     // 8 bits
       ) & 0x3fff);
     }
     words.pop();
@@ -68,7 +76,14 @@ switch(wid*100+hgt) {
   case 813:
     asmName = 'font813';
     for(col=0; col<cols.length-8; col++) {
-      words.push(cols[col]);
+      wordIn = cols[col];
+      word = 0;
+      for(j = 0; j < 14; j++) {
+        word <<= 1;
+        word |= (wordIn & 1);
+        wordIn >>= 1;
+      }
+      words.push(word);
     }
     break;
 
