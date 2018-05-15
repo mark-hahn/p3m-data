@@ -22,7 +22,6 @@ cols = [];
 for(lineIdx = 0; lineIdx < astLines.length; lineIdx += (hgt+1)) {
   col = [];
   for(i=1; i<wid; i++) col[i] = 0;
-
   for(i=0; i<hgt; i++) {
     line = astLines[lineIdx+i];
     for(j=0; j<wid; j++) {
@@ -37,7 +36,7 @@ for(lineIdx = 0; lineIdx < astLines.length; lineIdx += (hgt+1)) {
   }
   if(empty) break;
 }
-
+var x = 0;
 function reverseCol(idx) {
   var col = cols[idx];
   var newCol = 0
@@ -55,22 +54,23 @@ switch(wid*100+hgt) {
     asmName = 'font0708';
     for(var col=0; col<cols.length; col+=7) {
       words.push((
-        (reverseCol(col+0) <<  6) |  // 8 bits
-        (reverseCol(col+1) >>  2)    // 6 bits
+        (reverseCol(col+0) <<  6) |  // 8 bits  0
+        (reverseCol(col+1) >>  2)    // 6 bits  0
       ) & 0x3fff);
       words.push((
-        (reverseCol(col+1) << 12) |  // 2 bits
-        (reverseCol(col+2) <<  4) |  // 8 bits
-        (reverseCol(col+3) >>  4)    // 4 bits
-      ) & 0x3fff);
+        (reverseCol(col+1) << 12) |  // 2 bits  0
+        (reverseCol(col+2) <<  4) |  // 8 bits  0
+        (reverseCol(col+3) >>  4)    // 4 bits  7e
+      ) & 0x3fff);                   // 7
       words.push((
-        (reverseCol(col+3) << 10) |   // 4 bits
-        (reverseCol(col+4) <<  2) |   // 8 bits
-        (reverseCol(col+5) >>  4)     // 2 bits
-      ) & 0x3fff);
-      words.push((
-        (reverseCol(col+5) <<  8) |   // 6 bits
-        (reverseCol(col+6) >>  0)     // 8 bits
+        (reverseCol(col+3) << 10) |   // 4 bits  7e (11 10 00 00 00 00 00)
+        (reverseCol(col+4) <<  2) |   // 8 bits  42 (00 00 01 00 00 10 00)
+        (reverseCol(col+5) >>  6)     // 2 bits  42 (00 00 00 00 00 00 01)
+      ) & 0x3fff);                    // 3800 |  108 | 4 => 390c
+      words.push(( // 0000 0000 0000 00, 00 0000 0000 0111
+                   // 11 10 01 00 00 10 01, 00 0010 0100 0010
+        (reverseCol(col+5) <<  8) |   // 6 bits  42
+        (reverseCol(col+6) >>  0)     // 8 bits  42
       ) & 0x3fff);
     }
     words.pop();
