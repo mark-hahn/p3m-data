@@ -1,6 +1,6 @@
-PSECT font708sect,class=CODE,local,delta=2
-GLOBAL _font708
-_font708:
+PSECT font0708sect,class=CODE,local,delta=2
+GLOBAL _font0708
+_font0708:
  DW 0x0000
  DW 0x0000
  DW 0x0000
@@ -377,7 +377,7 @@ _font708:
  DW 0x2080
  DW 0x0000
  DW 0x0000
- DW 0x0701
- DW 0x01c1
- DW 0x0070
- DW 0x0000
+ DW 0x1f11
+ DW 0x0444
+ DW 0x1117
+ DW 0x3c00

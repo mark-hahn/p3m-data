@@ -1,7 +1,13 @@
 
 // use one of these
+
+// cd dir ~/dev/p3/pic/p3m_data/asterisk
 // node ast_to_asm.js 'homespun(7x8)-ast.txt'  7 8
+// cp font0708.asm ~/dev/p3/pic/p3m
+
+// cd dir ~/dev/p3/pic/p3m_data/asterisk
 // node ast_to_asm.js 'ibm_mda(8x13)-ast.txt'  8 13
+// cp font0813.asm ~/dev/p3/pic/p3m
 
 file = process.argv[2];
 wid = parseInt(process.argv[3]);
@@ -46,7 +52,7 @@ function reverseCol(idx) {
 words = [];
 switch(wid*100+hgt) {
   case 708:
-    asmName = 'font708';
+    asmName = 'font0708';
     for(var col=0; col<cols.length; col+=7) {
       words.push((
         (reverseCol(col+0) <<  6) |  // 8 bits
@@ -74,7 +80,7 @@ switch(wid*100+hgt) {
     break;
 
   case 813:
-    asmName = 'font813';
+    asmName = 'font0813';
     for(col=0; col<cols.length-8; col++) {
       wordIn = cols[col];
       word = 0;
@@ -100,4 +106,4 @@ for(i=0; i<words.length; i++) {
   while(word.length < 4) word = "0" + word;
   asm += " DW 0x" + word + "\n";
 }
-fs.writeFileSync(asmName + '.as', asm);
+fs.writeFileSync(asmName + '.asm', asm);

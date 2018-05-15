@@ -1,0 +1,35 @@
+m mainMenu
+  MAIN MENU
+  > Calibrate
+  > Paste
+  > Pick / Place
+  > Inspect
+  > Settings
+
+s pasteScreen
+  PASTE
+   !# Syringe Pos
+   #! Extrude
+  ~!# Lighting
+  ~#! Focus
+    ~ Main Menu
+
+s pickScreen
+  PICK/PLACE
+   !# Rotate
+   #! Pinch
+  ~!# Lighting
+  ~#! Focus
+    ~ Main Menu
+
+s inspectScreen
+  PICK/PLACE
+   !# Lighting
+   #! Focus
+  ~!# Syringe Pos
+  ~#! Pinch
+    ~ Main Menu
+
+m settingsMenu
+  SETTINGS
+  >
