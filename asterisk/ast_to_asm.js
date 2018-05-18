@@ -1,13 +1,13 @@
 
 // use one of these
 
-// cd dir ~/dev/p3/pic/p3m_data/asterisk
+// cd ~/dev/p3/pic/p3m_data/asterisk
 // node ast_to_asm.js 'homespun(7x8)-ast.txt'  7 8
-// cp font0708.asm ~/dev/p3/pic/p3m
+// cp font0708.asm ~/dev/p3/pic/p3mMcu
 
-// cd dir ~/dev/p3/pic/p3m_data/asterisk
+// cd ~/dev/p3/pic/p3m_data/asterisk
 // node ast_to_asm.js 'ibm_mda(8x13)-ast.txt'  8 13
-// cp font0813.asm ~/dev/p3/pic/p3m
+// cp font0813.asm ~/dev/p3/pic/p3mMcu
 
 file = process.argv[2];
 wid = parseInt(process.argv[3]);
@@ -19,7 +19,7 @@ fs = require('fs');
 astFile = fs.readFileSync(file, 'utf8');
 astLines = astFile.split('\n');
 cols = [];
-for(lineIdx = 0; lineIdx < astLines.length; lineIdx += (hgt+1)) {
+for(lineIdx = 0; lineIdx < astLines.length-3; lineIdx += (hgt+1)) {
   col = [];
   for(i=1; i<wid; i++) col[i] = 0;
   for(i=0; i<hgt; i++) {
@@ -29,12 +29,7 @@ for(lineIdx = 0; lineIdx < astLines.length; lineIdx += (hgt+1)) {
       if(line[j] == '*') col[j] |= 1;
     }
   }
-  empty = (lineIdx > 0);
-  for(j=0; j<wid; j++) {
-    cols.push(col[j]);
-    if(col[j]) empty = false;
-  }
-  if(empty) break;
+  for(j=0; j<wid; j++) cols.push(col[j]);
 }
 var x = 0;
 function reverseCol(idx) {
